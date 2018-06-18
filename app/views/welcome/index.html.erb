@@ -1,4 +1,83 @@
-<iframe align="middle" width="600" height="500" frameborder="0" style="border:0"
- src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBOam0f6dA7xc5jQhSWk65Sxf1dsG8edYU&q=universidade de sao paulo"
- allowfullscreen>
-</iframe>
+<!DOCTYPE html>
+<html>
+<body>
+
+<%= form_tag() do %>
+  <%= text_field_tag :store %>
+  <%= submit_tag 'Pesquisar' %>
+<% end %>
+<br>
+<br>
+<br>
+
+<div id="map" style="width:100%;height:500px"></div>
+
+<script>
+function createCircle(map, rad, coord){
+  var cityCircle = new google.maps.Circle({
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35,
+            map: map,
+            center: coord,
+            radius: rad
+          });
+
+  cityCircle.setMap(map);  
+}
+
+function myMap() {
+  var p1 = new google.maps.LatLng(-22.002538, -47.900000);
+  var p2 = new google.maps.LatLng(-22.002280, -47.899356);
+  var p3 = new google.maps.LatLng(-22.003871, -47.896180);
+  var p4 = new google.maps.LatLng(-22.005781, -47.896116);
+  var p5 = new google.maps.LatLng(-22.007969, -47.891975);
+  var p6 = new google.maps.LatLng(-22.011439, -47.891869);
+  var p7 = new google.maps.LatLng(-22.011420, -47.896863);
+  var p8 = new google.maps.LatLng(-22.004409, -47.900767);
+  
+  var myCenter = new google.maps.LatLng(-22.005264, -47.893702);
+
+  var mapCanvas = document.getElementById("map");
+  var mapOptions = {center: myCenter, zoom: 15};
+  var map = new google.maps.Map(mapCanvas,mapOptions);
+  
+  var marker = new google.maps.Marker({position:myCenter});
+  marker.setMap(map);
+
+  var infowindow = new google.maps.InfoWindow({
+    content: "ANUNCIE AQUI"
+  });
+  
+  google.maps.event.addListener(marker,'click',function() {
+    infowindow.open(map,marker);
+    createCircle(map, 200, myCenter);
+  });
+
+
+  var flightPath = new google.maps.Polygon({
+    path: [p1,p2,p3,p4,p5,p6,p7,p8],
+    strokeColor: "#0000FF",
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: "#0000FF",
+    fillOpacity: 0.4
+  });
+  flightPath.setMap(map);
+}
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-Yl3eFDJnTRE5x-rpWI-ODmrkqJvfFXo&callback=myMap"></script>
+
+<br>
+<br>
+<br>
+<table>
+	<tr>
+		<th>Latitude</th>
+		<th>Longitude</th>
+		<th>Descrição</th>
+	</tr>
+</table>
