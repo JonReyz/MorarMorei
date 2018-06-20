@@ -12,6 +12,7 @@
 
   <body>
   <div id="user_header">
+    <%= link_to 'Home', root_path %>
     <% if logged_in? %>
       <% user = User.find(session[:user_id]) if session[:user_id] %>
       Nome: <%= user.nome %>
