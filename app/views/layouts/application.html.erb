@@ -7,9 +7,27 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
   </head>
 
   <body>
+  <div id="user_header">
+    <% if logged_in? %>
+      <% user = User.find(session[:user_id]) if session[:user_id] %>
+      Nome: <%= user.nome %>
+      <%= link_to 'Logout', logout_path %>
+    <% else %>
+      <%= link_to 'Sign Up', signup_path %>
+      <%= link_to 'Log In', login_path %>        
+    <% end %>
+  </div>
+
+  <div id="container">
+    <% flash.each do |name, msg| %>
+      <%= content_tag :div, msg, id: "flash_#{name}" %>
+    <% end %>
     <%= yield %>
+  </div>
+
   </body>
 </html>
