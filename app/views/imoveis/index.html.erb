@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Imoveis</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Preço</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th>Descricao</th>
+      <th>Rua</th>
+      <th>Bairro</th>
+      <th>Cidade</th>
+      <th>Nro</th>
+      <th>Complemento</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @imoveis.each do |imovei| %>
+      <tr>
+        <td><%= imovei.id %></td>
+        <td><%= imovei.preço %></td>
+        <td><%= imovei.latitude %></td>
+        <td><%= imovei.longitude %></td>
+        <td><%= imovei.descricao %></td>
+        <td><%= imovei.rua %></td>
+        <td><%= imovei.bairro %></td>
+        <td><%= imovei.cidade %></td>
+        <td><%= imovei.nro %></td>
+        <td><%= imovei.complemento %></td>
+        <td><%= link_to 'Show', imovei %></td>
+        <td><%= link_to 'Edit', edit_imovei_path(imovei) %></td>
+        <td><%= link_to 'Destroy', imovei, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Imovei', new_imovei_path %>

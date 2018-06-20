@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  preço: 1.5
+  latitude: 1.5
+  longitude: 1.5
+  descricao: MyString
+  rua: MyString
+  bairro: MyString
+  cidade: MyString
+  nro: MyString
+  complemento: MyString
+
+two:
+  id: 1
+  preço: 1.5
+  latitude: 1.5
+  longitude: 1.5
+  descricao: MyString
+  rua: MyString
+  bairro: MyString
+  cidade: MyString
+  nro: MyString
+  complemento: MyString

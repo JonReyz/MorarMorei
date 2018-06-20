@@ -1,0 +1,67 @@
+<%= form_with(model: imovei, local: true) do |form| %>
+  <% if imovei.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(imovei.errors.count, "error") %> prohibited this imovei from being saved:</h2>
+
+      <ul>
+      <% imovei.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :id %>
+    <%= form.number_field :id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :preço %>
+    <%= form.text_field :preço %>
+  </div>
+
+  <div class="field">
+    <%= form.label :latitude %>
+    <%= form.text_field :latitude %>
+  </div>
+
+  <div class="field">
+    <%= form.label :longitude %>
+    <%= form.text_field :longitude %>
+  </div>
+
+  <div class="field">
+    <%= form.label :descricao %>
+    <%= form.text_field :descricao %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rua %>
+    <%= form.text_field :rua %>
+  </div>
+
+  <div class="field">
+    <%= form.label :bairro %>
+    <%= form.text_field :bairro %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cidade %>
+    <%= form.text_field :cidade %>
+  </div>
+
+  <div class="field">
+    <%= form.label :nro %>
+    <%= form.text_field :nro %>
+  </div>
+
+  <div class="field">
+    <%= form.label :complemento %>
+    <%= form.text_field :complemento %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

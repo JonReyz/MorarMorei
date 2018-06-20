@@ -1,0 +1,2 @@
+class Imovei < ApplicationRecord
+end
