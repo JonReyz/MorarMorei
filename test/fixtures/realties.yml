@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  roca_id: 1
+  latitude: 1.5
+  longitude: 1.5
+  address: MyString
+  building: MyString
+  complement: MyString
+  district: MyString
+  description: MyString
+
+two:
+  roca_id: 1
+  latitude: 1.5
+  longitude: 1.5
+  address: MyString
+  building: MyString
+  complement: MyString
+  district: MyString
+  description: MyString

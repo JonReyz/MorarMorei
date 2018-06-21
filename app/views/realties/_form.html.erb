@@ -1,0 +1,57 @@
+<%= form_with(model: realty, local: true) do |form| %>
+  <% if realty.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(realty.errors.count, "error") %> prohibited this realty from being saved:</h2>
+
+      <ul>
+      <% realty.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :roca_id %>
+    <%= form.number_field :roca_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :latitude %>
+    <%= form.text_field :latitude %>
+  </div>
+
+  <div class="field">
+    <%= form.label :longitude %>
+    <%= form.text_field :longitude %>
+  </div>
+
+  <div class="field">
+    <%= form.label :address %>
+    <%= form.text_field :address %>
+  </div>
+
+  <div class="field">
+    <%= form.label :building %>
+    <%= form.text_field :building %>
+  </div>
+
+  <div class="field">
+    <%= form.label :complement %>
+    <%= form.text_field :complement %>
+  </div>
+
+  <div class="field">
+    <%= form.label :district %>
+    <%= form.text_field :district %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_field :description %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
