@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Roca:</strong>
+  <%= @realty.roca_id %>
+</p>
+
+<p>
+  <strong>Latitude:</strong>
+  <%= @realty.latitude %>
+</p>
+
+<p>
+  <strong>Longitude:</strong>
+  <%= @realty.longitude %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @realty.address %>
+</p>
+
+<p>
+  <strong>Building:</strong>
+  <%= @realty.building %>
+</p>
+
+<p>
+  <strong>Complement:</strong>
+  <%= @realty.complement %>
+</p>
+
+<p>
+  <strong>District:</strong>
+  <%= @realty.district %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @realty.description %>
+</p>
+
+<%= link_to 'Edit', edit_realty_path(@realty) %> |
+<%= link_to 'Back', realties_path %>
