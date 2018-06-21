@@ -1,6 +1,8 @@
 class RealtiesController < ApplicationController
   before_action :set_realty, only: [:show, :edit, :update, :destroy]
 
+  caches_action :index
+
   # GET /realties
   # GET /realties.json
   def index
@@ -10,6 +12,7 @@ class RealtiesController < ApplicationController
   # GET /realties/1
   # GET /realties/1.json
   def show
+    render layout: false
   end
 
   # GET /realties/new
