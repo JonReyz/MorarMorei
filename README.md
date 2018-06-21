@@ -9,6 +9,13 @@ https://docs.docker.com/compose/install/
 ## Criando o banco de dados (basta rodar 1 vez)
 `sudo docker-compose run web rake db:create`
 
+## Para migrar o banco de dados (quando algum commit adiciona alguma migration)
+`sudo docker-compose run web rake db:migrate`
+
+## Para popular o banco de dados (com o arquivo db/TBL_IMV_ROCA.csv)
+Aviso: pode demorar alguns minutos.
+`sudo docker-compose run web rake db:seed`
+
 ## Desenvolvendo com Docker:
 
 Apos instalar o Docker, Docker Compose e clonar o repositorio, de build na imagem:
@@ -37,5 +44,8 @@ Para encerrar a sessao, aperte CTRL-P e depois CTRL-Q.
 Todas as dependencias devem ser adicionadas ou no Dockerfile, ou no Gemfile.
 Apos refletir as alteracoes no container:
 `sudo docker-compose down`
+
 `sudo docker-compose build`
+
 `sudo docker-compose up -d`
+
