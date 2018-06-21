@@ -1,10 +1,30 @@
-<script>
-  jQuery(function() {
-    <%= @map.to_js %>
-  })
-</script>
+<style>
+.container {
+   width: 80%;
+   height: 100%;
+   position: absolute;
+   left: 5%;
+   top: 10%;
+   margin-left: 0px; /* Half of width */
+   margin-top: 0px;    /* Half of height */
+}
+
+.left {
+   float: left;
+   width: 80%;
+   height: 100%;
+}
+
+.right {
+   float: right;
+   width: 10%;
+   height: 100%;
+   margin-left: 15px;
+</style>
+
 <body>
-  <div sytle='width: 800px'>
-    <div id='map' style='width: 800px; height: 400px'></div>
-  </div>
+	<div class="container">
+		<div id='map' class='left'></div>
+		<div id='info' class='right'>No information</div>
+	</div>
 </body>

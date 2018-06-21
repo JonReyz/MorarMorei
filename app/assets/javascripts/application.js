@@ -16,3 +16,45 @@
 //= require_tree .
 //= require jquery
 //= require gmaps
+
+document.addEventListener("turbolinks:load", function() {
+	function createMarker(map, row) {
+		var marker = new google.maps.Marker({
+			position: new google.maps.LatLng(row['latitude'], row['longitude']),
+			map: map,
+			title: row['address'],
+		});
+
+		google.maps.event.addListener(marker, 'click', function() {
+			$.get(
+				'realties/' + row['id'],
+				{},
+				function(data) {
+					$('#info').html(data);
+				}
+			);
+		});
+	}
+
+	function initialize(){
+		if (document.getElementById('map')) {
+			var mapOptions = {
+				zoom: 17,
+				center: new google.maps.LatLng(-22.0059848,-47.8931638),
+			};
+			var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+			$.get(
+				'realties.json',
+				{},
+				function(data) {
+					for (var key in data) {
+						createMarker(map, data[key]);
+					}
+				}
+			);
+		}
+	}
+
+	initialize()
+});
