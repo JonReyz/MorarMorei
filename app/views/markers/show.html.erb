@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @marker.address %>
+</p>
+
+<p>
+  <strong>Latitude:</strong>
+  <%= @marker.latitude %>
+</p>
+
+<p>
+  <strong>Longitude:</strong>
+  <%= @marker.longitude %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @marker.description %>
+</p>
+
+<p>
+  <strong>Positive:</strong>
+  <%= @marker.positive %>
+</p>
+
+<%= link_to 'Edit', edit_marker_path(@marker) %> |
+<%= link_to 'Back', markers_path %>
