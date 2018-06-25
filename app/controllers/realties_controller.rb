@@ -12,6 +12,7 @@ class RealtiesController < ApplicationController
   # GET /realties/1
   # GET /realties/1.json
   def show
+    # render plain: params.inspect
     render layout: false
   end
 
