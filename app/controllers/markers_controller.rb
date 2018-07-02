@@ -1,4 +1,5 @@
 class MarkersController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :set_marker, only: [:show, :edit, :update, :destroy]
 
   # GET /markers
@@ -10,6 +11,7 @@ class MarkersController < ApplicationController
   # GET /markers/1
   # GET /markers/1.json
   def show
+    render layout: false
   end
 
   # GET /markers/new
@@ -24,16 +26,22 @@ class MarkersController < ApplicationController
   # POST /markers
   # POST /markers.json
   def create
-    @marker = Marker.new(marker_params)
+    # @marker = Marker.new(marker_params)
 
-    respond_to do |format|
-      if @marker.save
-        format.html { redirect_to @marker, notice: 'Marker was successfully created.' }
-        format.json { render :show, status: :created, location: @marker }
-      else
-        format.html { render :new }
-        format.json { render json: @marker.errors, status: :unprocessable_entity }
-      end
+    # respond_to do |format|
+    #   if @marker.save
+    #     format.html { redirect_to @marker, notice: 'Marker was successfully created.' }
+    #     format.json { render :show, status: :created, location: @marker }
+    #   else
+    #     format.html { render :new }
+    #     format.json { render json: @marker.errors, status: :unprocessable_entity }
+    #   end
+    # end
+    @marker = Marker.new(marker_params)
+    if @marker.save
+      render plain: 'Descricão adicionada, obrigado!'
+    else
+      render plain: 'Nao foi possivel adicionar essa descricao, entre em contato com um administrador.'
     end
   end
 

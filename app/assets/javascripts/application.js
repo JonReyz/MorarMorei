@@ -17,15 +17,29 @@
 //= require jquery
 //= require gmaps
 
-document.addEventListener("turbolinks:load", function() {
-	function initialize() {
-		if (document.getElementById('map')) {
+function initialize() {
+	if (document.getElementById('map')) {
+		if (document.getElementById('imoveis').checked) {
 			var mapOptions = {
 				zoom: 17,
 				center: new google.maps.LatLng(-22.0059848, -47.8931638),
 			};
 
 			var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+			map.addListener('click', function(e) {
+				var desc_flag = document.getElementById('desc_flag');
+
+				if (desc_flag.value == '1') {
+					$('#info').html('\
+						  Descricão:<br><textarea id="descricao" name="fname"></textarea><br>\
+						  <button class="descbtn" type="button" onclick="addDesc('+e.latLng.lat()+','+e.latLng.lng()+')">Salvar</button>\
+						  <button class="descbtn" type="button" onclick="cancelDesc()">Cancelar</button>\
+					');
+				}
+
+				desc_flag.value = '0';
+			});
 
 			function createMarker(row) {
 				var marker = new google.maps.Marker({
@@ -56,8 +70,85 @@ document.addEventListener("turbolinks:load", function() {
 
 				}
 			);
+		} else {
+			var mapOptions = {
+				zoom: 17,
+				center: new google.maps.LatLng(-22.0059848, -47.8931638),
+			};
+
+			var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+			map.addListener('click', function(e) {
+				var desc_flag = document.getElementById('desc_flag');
+
+				if (desc_flag.value == '1') {
+					$('#info').html('\
+						  Descricão:<br><textarea id="descricao" name="fname"></textarea><br>\
+						  <button class="descbtn" type="button" onclick="addDesc('+e.latLng.lat()+','+e.latLng.lng()+')">Salvar</button>\
+						  <button class="descbtn" type="button" onclick="cancelDesc()">Cancelar</button>\
+					');
+				}
+
+				desc_flag.value = '0';
+			});
+
+			function createMarker(row) {
+				var marker = new google.maps.Marker({
+					position: new google.maps.LatLng(row['latitude'], row['longitude'])
+				});
+
+				google.maps.event.addListener(marker, 'click', function() {
+					$.get(
+						'markers/' + row['id'],
+						{ },
+						function(data) {
+							$('#info').html(data);
+						}
+					);
+				});
+
+				return marker
+
+				// for (var key in row) {
+				// 	console.log(key + '=' + row[key]);
+				// }
+			}
+
+			$.get(
+				'markers.json',
+				{},
+				function(data) {
+					var markers = data.map(createMarker);
+
+					var markerCluster = new MarkerClusterer(map, markers, {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+
+				}
+			);
 		}
 	}
+}
 
+function newDesc() {
+	document.getElementById('desc_flag').value = '1';
+	$('#info').html('Clique no mapa para escolher a posicao');
+}
+
+function addDesc(lat, lng) {
+	var descricao = document.getElementById('descricao').value;
+	console.log('lat: ' + lat);
+	console.log('lng: ' + lng);
+	console.log('descricao: ' + descricao);
+
+	$.post("/markers", {'marker': {latitude: lat, longitude: lng, description: descricao}}, function(data) {
+		$('#info').html(data);
+		initialize();
+	});
+}
+
+function cancelDesc() {
+	$('#info').html('Clique em um marker para ver informações sobre ele');
+}
+
+document.addEventListener("turbolinks:load", function() {
 	initialize()
 });
