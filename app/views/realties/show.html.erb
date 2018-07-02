@@ -1,6 +1,6 @@
-<p id="notice"><%= notice %></p>
+<!-- <p id="notice"><%= notice %></p> -->
 
-<p>
+<!-- <p>
   <strong>Roca:</strong>
   <%= @realty.roca_id %>
 </p>
@@ -13,31 +13,38 @@
 <p>
   <strong>Longitude:</strong>
   <%= @realty.longitude %>
-</p>
+</p> -->
 
 <p>
-  <strong>Address:</strong>
+  <strong>Endereço:</strong>
   <%= @realty.address %>
 </p>
 
-<p>
+<!-- <p>
   <strong>Building:</strong>
   <%= @realty.building %>
-</p>
+</p> -->
 
 <p>
-  <strong>Complement:</strong>
+  <strong>Complemento:</strong>
   <%= @realty.complement %>
 </p>
 
-<p>
+<!-- <p>
   <strong>District:</strong>
   <%= @realty.district %>
-</p>
+</p> -->
 
 <p>
-  <strong>Description:</strong>
+  <strong>Descrição:</strong>
   <%= @realty.description %>
 </p>
 
-<%= link_to 'Edit', edit_realty_path(@realty) %> |
+<p>
+  <strong>Preço:</strong>
+  <%= @realty.price %>
+</p>
+
+
+<a href="https://www.roca.com.br/busca?tab=venda&codigo=<%= @realty.roca_id %>&cidade=2&bairro=&universidade=&tipo=&tipo_universitario=&nome_end=&quartos=0&banheiros=0&garagens=0&preco_min=&preco_max=">Ver no site da Roca</a>
+

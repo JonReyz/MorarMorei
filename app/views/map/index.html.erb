@@ -1,30 +1,55 @@
 <style>
 .container {
-   width: 80%;
-   height: 100%;
-   position: absolute;
-   left: 5%;
-   top: 10%;
-   margin-left: 0px; /* Half of width */
-   margin-top: 0px;    /* Half of height */
+	border: 1px solid #000;
+	display: flex;
+	padding: 3px;
+	min-height: 500px;
+	height: 100%
 }
 
-.left {
-   float: left;
-   width: 80%;
-   height: 100%;
+.container > div {
+	border: 1px solid #000;
+	margin: 2px;
 }
 
-.right {
-   float: right;
-   width: 10%;
-   height: 100%;
-   margin-left: 15px;
+#map {
+	width: 100%;
+}
+
+#info {
+	width: 30%;
+}
+
+#dashboard {
+	width: 100%;
+	border: 1px solid #000;
+	padding: 3px;
+	min-height: 50px;
+	margin: 2px;
+}
+
+#descricao {
+	width: 80%;
+}
+
+.descbtn {
+	/*width: 40%;*/
+	/*height: 20px;*/
+}
+
 </style>
 
 <body>
-	<div class="container">
-		<div id='map' class='left'></div>
-		<div id='info' class='right'>No information</div>
+	<div id='dashboard'>
+	<button type='button' onclick="newDesc()">Adicionar descrição</button>
+	<form action="">
+	  <input type="radio" name="filter_marker" onchange="initialize()" id="imoveis" value="imoveis" checked> Imóveis
+	  <input type="radio" name="filter_marker" onchange="initialize()" id="descricoes" value="descricoes"> Descricões
+	</form>
 	</div>
+	<div class='container'>
+		<div id='map' class='left'></div>
+		<div id='info' class='right'>Clique em um marker para ver informações sobre ele</div>
+	</div>
+	<input type="hidden" id="desc_flag" value="0" />
 </body>
