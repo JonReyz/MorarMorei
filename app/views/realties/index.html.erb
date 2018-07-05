@@ -13,6 +13,7 @@
       <th>Complement</th>
       <th>District</th>
       <th>Description</th>
+      <th>Price</th> 
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -28,6 +29,7 @@
         <td><%= realty.complement %></td>
         <td><%= realty.district %></td>
         <td><%= realty.description %></td>
+        <td><%= realty.price %></td>
         <td><%= link_to 'Show', realty %></td>
         <td><%= link_to 'Edit', edit_realty_path(realty) %></td>
         <td><%= link_to 'Destroy', realty, method: :delete, data: { confirm: 'Are you sure?' } %></td>

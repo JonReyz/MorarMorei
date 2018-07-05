@@ -17,138 +17,212 @@
 //= require jquery
 //= require gmaps
 
-function initialize() {
-	if (document.getElementById('map')) {
-		if (document.getElementById('imoveis').checked) {
-			var mapOptions = {
-				zoom: 17,
-				center: new google.maps.LatLng(-22.0059848, -47.8931638),
-			};
+function Mapa() {
+	this.initialized = false
+	this.map = null
+	this.mapOptions = {
+		zoom: 17,
+		center: new google.maps.LatLng(-22.0059848, -47.8931638),
+	}
+	this.realties = new Array()
+	this.descriptions = new Array()
 
-			var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+	this.realtyClusterer = null
+	this.descriptionClusterer = null
 
-			map.addListener('click', function(e) {
-				var desc_flag = document.getElementById('desc_flag');
+	// flag que diz se o usuario está adicionando uma nova descricão
+	this.addingDescription = false
+	// posicao em que a nova descrição será adicionada
+	this.newDescriptionPosition = null
+}
 
-				if (desc_flag.value == '1') {
-					$('#info').html('\
-						  Descricão:<br><textarea id="descricao" name="fname"></textarea><br>\
-						  <button class="descbtn" type="button" onclick="addDesc('+e.latLng.lat()+','+e.latLng.lng()+')">Salvar</button>\
-						  <button class="descbtn" type="button" onclick="cancelDesc()">Cancelar</button>\
-					');
-				}
+// Cria o objeto mapa
+var mapa = new Mapa()
 
-				desc_flag.value = '0';
-			});
+// Funcao que atualiza os markers sendo mostrado no momento, de acordo com os filtros ativos
+Mapa.prototype.refresh = function() {
+	// funcao que cria o marker dos imoveis
+	function createRealtyMarker(realty) {
+		var marker = new google.maps.Marker({
+			position: new google.maps.LatLng(realty['latitude'], realty['longitude']),
+			title: realty['address']
+		});
 
-			function createMarker(row) {
-				var marker = new google.maps.Marker({
-					position: new google.maps.LatLng(row['latitude'], row['longitude']),
-					title: row['address'],
-				});
-
-				google.maps.event.addListener(marker, 'click', function() {
-					$.get(
-						'realties/' + row['id'],
-						{ },
-						function(data) {
-							$('#info').html(data);
-						}
-					);
-				});
-
-				return marker
-			}
-
+		google.maps.event.addListener(marker, 'click', function() {
 			$.get(
-				'realties.json',
-				{},
+				'realties/' + realty['id'],
+				{ },
 				function(data) {
-					var markers = data.map(createMarker);
-
-					var markerCluster = new MarkerClusterer(map, markers, {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-
+					$('#info').html(data);
 				}
 			);
-		} else {
-			var mapOptions = {
-				zoom: 17,
-				center: new google.maps.LatLng(-22.0059848, -47.8931638),
-			};
+		});
 
-			var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+		return marker;
+	}
 
-			map.addListener('click', function(e) {
-				var desc_flag = document.getElementById('desc_flag');
-
-				if (desc_flag.value == '1') {
-					$('#info').html('\
-						  Descricão:<br><textarea id="descricao" name="fname"></textarea><br>\
-						  <button class="descbtn" type="button" onclick="addDesc('+e.latLng.lat()+','+e.latLng.lng()+')">Salvar</button>\
-						  <button class="descbtn" type="button" onclick="cancelDesc()">Cancelar</button>\
-					');
-				}
-
-				desc_flag.value = '0';
-			});
-
-			function createMarker(row) {
-				var marker = new google.maps.Marker({
-					position: new google.maps.LatLng(row['latitude'], row['longitude'])
-				});
-
-				google.maps.event.addListener(marker, 'click', function() {
-					$.get(
-						'markers/' + row['id'],
-						{ },
-						function(data) {
-							$('#info').html(data);
-						}
-					);
-				});
-
-				return marker
-
-				// for (var key in row) {
-				// 	console.log(key + '=' + row[key]);
-				// }
-			}
-
-			$.get(
-				'markers.json',
-				{},
-				function(data) {
-					var markers = data.map(createMarker);
-
-					var markerCluster = new MarkerClusterer(map, markers, {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-
-				}
-			);
+	// funcao que filtra os imoveis
+	function filterRealty(realty) {
+		if (!document.getElementById('imoveis').checked) {
+			return false;
 		}
+
+		if (!realty.price) {
+			return false;
+		}
+
+		return true;
+	}
+
+	// funcao que cria o marker das descricoes
+	function createDescriptionMarker(desc) {
+		var marker = new google.maps.Marker({
+			position: new google.maps.LatLng(desc['latitude'], desc['longitude'])
+		});
+
+		google.maps.event.addListener(marker, 'click', function() {
+			$.get(
+				'markers/' + desc['id'],
+				{ },
+				function(data) {
+					$('#info').html(data);
+				}
+			);
+		});
+
+		return marker
+	}
+
+	// funcao que filtra as descricoes
+	function filterDescription(desc) {
+		if (!document.getElementById('descricoes').checked) {
+			return false;
+		}
+
+		return true;
+	}
+
+	if (this.realtyClusterer) {
+		var markers = this.realties.filter(filterRealty).map(createRealtyMarker);
+		this.realtyClusterer.clearMarkers();
+		this.realtyClusterer.addMarkers(markers);
+	} else {
+		var markers = this.realties.filter(filterRealty).map(createRealtyMarker);
+		this.realtyClusterer = new MarkerClusterer(this.map, markers, 
+			{imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'}
+		);
+	}
+
+	if (this.descriptionClusterer) {
+		var markers = this.descriptions.filter(filterDescription).map(createDescriptionMarker);
+		this.descriptionClusterer.clearMarkers();
+		this.descriptionClusterer.addMarkers(markers);
+	} else {
+		var markers = this.descriptions.filter(filterDescription).map(createDescriptionMarker);
+		this.descriptionClusterer = new MarkerClusterer(this.map, markers,
+			{imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'}
+		);
 	}
 }
 
-function newDesc() {
-	document.getElementById('desc_flag').value = '1';
-	$('#info').html('Clique no mapa para escolher a posicao');
+// Funcao que requisita as moradias do servidor
+Mapa.prototype.updateRealties = function() {
+	console.log('Requisitando moradias...')
+
+	$.get(
+		'realties.json',
+		{},
+		function(data) {
+			mapa.realties = data
+			mapa.refresh();
+
+			console.log('Recebeu as moradias')
+		}
+	);
 }
 
-function addDesc(lat, lng) {
-	var descricao = document.getElementById('descricao').value;
-	console.log('lat: ' + lat);
-	console.log('lng: ' + lng);
-	console.log('descricao: ' + descricao);
+// Funcao que requisita as descricoes do servidor
+Mapa.prototype.updateDescriptions = function() {
+	// requisita as descricoes do servidor
+	console.log('Requisitando as descricoes...')
+	$.get(
+		'markers.json',
+		{},
+		function(data) {
+			mapa.descriptions = data
+			mapa.refresh();
 
-	$.post("/markers", {'marker': {latitude: lat, longitude: lng, description: descricao}}, function(data) {
-		$('#info').html(data);
-		initialize();
-	});
+			console.log('Recebeu as descricoes')
+		}
+	);
 }
 
-function cancelDesc() {
+// Funcao que inicializa o mapa
+Mapa.prototype.initialize = function(map) {
+	if (this.initialized) {
+		console.log('Mapa ja foi inicializado.')
+		return
+	}
+
+	// inicializa o google maps
+	this.map = new google.maps.Map(map, this.mapOptions)
+	this.initialized = true
+
+	// evento on click
+	this.map.addListener('click', function(e) {
+		if (mapa.addingDescription) {
+			mapa.newDescriptionPosition = e.latLng;
+
+			$('#info').html('\
+				  Descricão:<br><textarea id="descricao"></textarea><br>\
+				  <button type="button" onclick="mapa.createDescription()")">Salvar</button>\
+				  <button type="button" onclick="mapa.cancelNewDescription()">Cancelar</button>\
+			');
+
+			mapa.addingDescription = false;
+		}
+	})
+
+	this.updateRealties();
+	this.updateDescriptions();
+}
+
+Mapa.prototype.addDescription = function() {
+	this.addingDescription = true;
+}
+
+Mapa.prototype.createDescription = function() {
+	if (this.newDescriptionPosition) {
+		var description = document.getElementById('descricao').value;
+
+		$.post(
+			'/markers',
+
+			{
+				'marker': {
+					latitude: this.newDescriptionPosition.lat(),
+					longitude: this.newDescriptionPosition.lng(),
+					description: description
+				}
+			},
+
+			function(data) {
+				$('#info').html(data);
+				mapa.updateDescriptions();
+			}
+		);
+
+		this.newDescriptionPosition = null
+	}
+}
+
+Mapa.prototype.cancelNewDescription = function() {
 	$('#info').html('Clique em um marker para ver informações sobre ele');
 }
 
 document.addEventListener("turbolinks:load", function() {
-	initialize()
+	var map = document.getElementById('map');
+	if (map) {
+		mapa.initialize(document.getElementById('map'))
+	}
 });
