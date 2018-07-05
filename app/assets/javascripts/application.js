@@ -122,7 +122,6 @@ Mapa.prototype.refresh = function() {
 	} else {
 		var markers = this.descriptions.filter(filterDescription).map(createDescriptionMarker);
 		this.descriptionClusterer = new MarkerClusterer(this.map, markers,
-			// {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'}
 			{imagePath: '/infocluster'}
 		);
 	}
@@ -188,6 +187,12 @@ Mapa.prototype.initialize = function(map) {
 
 	this.updateRealties();
 	this.updateDescriptions();
+
+	markUSP1(this.map);
+	markUSP2(this.map)
+	markUFSCAR(this.map);
+	markIFSP(this.map);
+	markRodov(this.map);
 }
 
 Mapa.prototype.addDescription = function() {
@@ -229,3 +234,159 @@ document.addEventListener("turbolinks:load", function() {
 		mapa.initialize(document.getElementById('map'))
 	}
 });
+
+function markUSP1(map){
+	var p1 = new google.maps.LatLng(-22.002538, -47.900000);
+	var p2 = new google.maps.LatLng(-22.002280, -47.899356);
+	var p3 = new google.maps.LatLng(-22.003871, -47.896180);
+	var p4 = new google.maps.LatLng(-22.005781, -47.896116);
+	var p5 = new google.maps.LatLng(-22.007969, -47.891975);
+	var p6 = new google.maps.LatLng(-22.011439, -47.891869);
+	var p7 = new google.maps.LatLng(-22.011420, -47.896863);
+	var p8 = new google.maps.LatLng(-22.004409, -47.900767);
+	var p9 = new google.maps.LatLng(-22.003638, -47.900241);
+	var p10 = new google.maps.LatLng(-22.004977, -47.900617);
+	var p11 = new google.maps.LatLng(-22.006598, -47.899168);
+	var p12 = new google.maps.LatLng(-22.007533, -47.899276);
+	var p13 = new google.maps.LatLng(-22.010338, -47.896915);
+	var p14 = new google.maps.LatLng(-22.007948, -47.895897);
+	var p15 = new google.maps.LatLng(-22.011439, -47.895851);
+	
+	var flightPathUSP1 = new google.maps.Polygon({
+		path: [p1,p2,p3,p4,p5,p14,p15,p7,p13,p12,p11,p10,p8,p9],
+		strokeColor: "#FFFF00",
+		strokeOpacity: 0.8,
+		strokeWeight: 2,
+		fillColor: "#FFFF00",
+		fillOpacity: 0.4
+	});
+	flightPathUSP1.setMap(map);
+	
+	
+	var mat1 = new google.maps.LatLng(-22.006206, -47.895236);
+	var mat2 = new google.maps.LatLng(-22.006225, -47.895195);
+	var mat3 = new google.maps.LatLng(-22.006264, -47.895225);
+	var mat4 = new google.maps.LatLng(-22.006251, -47.895264);
+	
+	var flightPathMat = new google.maps.Polygon({
+		path: [mat1,mat2,mat3,mat4],
+		strokeColor: "#FF0000",
+		strokeOpacity: 0.8,
+		strokeWeight: 2,
+		fillColor: "#FF0000",
+		fillOpacity: 0.4
+	});
+	flightPathMat.setMap(map);
+}
+
+function markUSP2(map){
+	var p1 = new google.maps.LatLng(-22.000715, -47.929290);
+	var p2 = new google.maps.LatLng(-22.001119, -47.928550);
+	var p3 = new google.maps.LatLng(-22.002910, -47.927868);
+	var p4 = new google.maps.LatLng(-22.007529, -47.931399);
+	var p5 = new google.maps.LatLng(-22.006640, -47.933195);
+	var p6 = new google.maps.LatLng(-22.004628, -47.935575);
+	var p7 = new google.maps.LatLng(-22.003144, -47.935602);
+	var p8 = new google.maps.LatLng(-21.999988, -47.934324);
+	var p9 = new google.maps.LatLng(-21.996720, -47.934261);
+	var p10 = new google.maps.LatLng(-21.999325, -47.930100);
+	var p11 = new google.maps.LatLng(-22.000492, -47.929870);
+	
+	var flightPathUSP2 = new google.maps.Polygon({
+		path: [p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11],
+		strokeColor: "#FFFF00",
+		strokeOpacity: 0.8,
+		strokeWeight: 2,
+		fillColor: "#FFFF00",
+		fillOpacity: 0.4
+	});
+	flightPathUSP2.setMap(map);
+	
+	var pos = new google.maps.LatLng(-22.005264, -47.893702);
+	google.maps.event.addListener(flightPathUSP2, 'click', function() {
+		addInfo(map);
+	});	
+}
+
+function markUFSCAR(map){
+	var f1 = new google.maps.LatLng(-21.988063, -47.876934);
+	var f2 = new google.maps.LatLng(-21.981110, -47.876202);
+	var f3 = new google.maps.LatLng(-21.980984, -47.877342);
+	var f4 = new google.maps.LatLng(-21.978729, -47.876467);
+	var f5 = new google.maps.LatLng(-21.976083, -47.882623);
+	var f6 = new google.maps.LatLng(-21.979481, -47.883817);
+	var f7 = new google.maps.LatLng(-21.980095, -47.885675);
+	var f8 = new google.maps.LatLng(-21.986624, -47.884281);
+	var f9 = new google.maps.LatLng(-21.989088, -47.884978);
+	var f10 = new google.maps.LatLng(-21.989874, -47.884778);
+	var f11 = new google.maps.LatLng(-21.990831, -47.883341);
+	var f12 = new google.maps.LatLng(-21.990667, -47.881991);
+	var f13 = new google.maps.LatLng(-21.988516, -47.878426);
+	
+	var flightPathUFSCAR = new google.maps.Polygon({
+		path: [f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13],
+		strokeColor: "#FF0000",
+		strokeOpacity: 0.8,
+		strokeWeight: 2,
+		fillColor: "#FF0000",
+		fillOpacity: 0.4
+	});
+	flightPathUFSCAR.setMap(map);
+}
+
+function markIFSP(map){
+	var ifsp1 = new google.maps.LatLng(-21.971157, -47.878597);
+	var ifsp2 = new google.maps.LatLng(-21.970278, -47.879511);
+	var ifsp3 = new google.maps.LatLng(-21.968735, -47.878217);
+	var ifsp4 = new google.maps.LatLng(-21.969273, -47.877561);
+	var ifsp5 = new google.maps.LatLng(-21.968861, -47.877253);
+	var ifsp6 = new google.maps.LatLng(-21.968062, -47.877938);
+	var ifsp7 = new google.maps.LatLng(-21.965659, -47.877842);
+	var ifsp8 = new google.maps.LatLng(-21.966624, -47.876534);
+	var ifsp9 = new google.maps.LatLng(-21.968347, -47.876601);
+	
+	var flightPathIFSP = new google.maps.Polygon({
+		path: [ifsp1,ifsp2,ifsp3,ifsp4,ifsp5,ifsp6,ifsp7,ifsp8,ifsp9],
+		strokeColor: "#00FF00",
+		strokeOpacity: 0.8,
+		strokeWeight: 2,
+		fillColor: "#00FF00",
+		fillOpacity: 0.4
+	});
+	flightPathIFSP.setMap(map);
+}
+
+function markRodov(map){
+	var r1 = new google.maps.LatLng(-22.005097, -47.889951);
+	var r2 = new google.maps.LatLng(-22.005077, -47.889116);
+	var r3 = new google.maps.LatLng(-22.005917, -47.889080);
+	var r4 = new google.maps.LatLng(-22.005913, -47.889928);
+	
+	var flightPathRodov = new google.maps.Polygon({
+		path: [r1,r2,r3,r4],
+		strokeColor: "#0000FF",
+		strokeOpacity: 0.8,
+		strokeWeight: 2,
+		fillColor: "#0000FF",
+		fillOpacity: 0.4
+	});
+	flightPathRodov.setMap(map);
+}
+
+function addInfo(map){
+	info = new google.maps.Marker({
+		map: map,
+		animation: google.maps.Animation.DROP,
+		position: new google.maps.LatLng(-22.001591, -47.931772),
+		icon: 'https://i.imgur.com/k9IepaU.png'
+	});
+	
+	var infowindow = new google.maps.InfoWindow({
+		content: 'Estudantes podem fazer o percurso entre os campi da USP 					utilizando os ônibus disponibilizados pela universidade <a 					href="http://www.puspsc.usp.br/horario-de-onibus-areas-1-e-					2/" </a><br/> Horários'
+	});
+	var pos = new google.maps.LatLng(-22.001591, -47.931772);
+	google.maps.event.addListener(info,'click',function() {
+		infowindow.open(map,info);
+	});
+		
+}
