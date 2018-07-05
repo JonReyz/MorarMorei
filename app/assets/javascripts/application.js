@@ -45,7 +45,8 @@ Mapa.prototype.refresh = function() {
 	function createRealtyMarker(realty) {
 		var marker = new google.maps.Marker({
 			position: new google.maps.LatLng(realty['latitude'], realty['longitude']),
-			title: realty['address']
+			title: realty['address'],
+			icon: 'moradiaicon.png'
 		});
 
 		google.maps.event.addListener(marker, 'click', function() {
@@ -77,7 +78,8 @@ Mapa.prototype.refresh = function() {
 	// funcao que cria o marker das descricoes
 	function createDescriptionMarker(desc) {
 		var marker = new google.maps.Marker({
-			position: new google.maps.LatLng(desc['latitude'], desc['longitude'])
+			position: new google.maps.LatLng(desc['latitude'], desc['longitude']),
+			icon: 'info-1.png'
 		});
 
 		google.maps.event.addListener(marker, 'click', function() {
@@ -109,7 +111,7 @@ Mapa.prototype.refresh = function() {
 	} else {
 		var markers = this.realties.filter(filterRealty).map(createRealtyMarker);
 		this.realtyClusterer = new MarkerClusterer(this.map, markers, 
-			{imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'}
+			{imagePath: '/moradiacluster'}
 		);
 	}
 
@@ -120,7 +122,8 @@ Mapa.prototype.refresh = function() {
 	} else {
 		var markers = this.descriptions.filter(filterDescription).map(createDescriptionMarker);
 		this.descriptionClusterer = new MarkerClusterer(this.map, markers,
-			{imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'}
+			// {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'}
+			{imagePath: '/infocluster'}
 		);
 	}
 }
