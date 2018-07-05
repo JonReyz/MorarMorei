@@ -45,6 +45,10 @@
 	<form action="">
 	  <input type="checkbox" name="filter_marker" onchange="mapa.refresh()" id="imoveis" value="imoveis" checked> Imóveis
 	  <input type="checkbox" name="filter_marker" onchange="mapa.refresh()" id="descricoes" value="descricoes" checked> Descricões
+	  <label id='min_price_label' for="min_price">Preço mínimo: R$0</label>
+	  <input type="range" id="min_price" name="filter_marker" onchange="mapa.minPriceChanged()" min="0" max="10000" value="0" step="100"/>
+	  <label id='max_price_label' for="max_price">Preço máximo: R$10000</label>
+	  <input type="range" id="max_price" name="filter_marker" onchange="mapa.maxPriceChanged()" min="0" max="10000" value="10000" step="100"/>
 	</form>
 	</div>
 	<div class='container'>

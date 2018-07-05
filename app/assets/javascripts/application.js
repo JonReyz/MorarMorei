@@ -39,6 +39,31 @@ function Mapa() {
 // Cria o objeto mapa
 var mapa = new Mapa()
 
+// Funcao que nao deixa os sliders representarem um intervalo invalido
+Mapa.prototype.minPriceChanged = function() {
+	var min_price = document.getElementById('min_price')
+	var max_price = document.getElementById('max_price')
+	document.getElementById('min_price_label').innerHTML = 'Preço mínimo: R$' + min_price.value;
+	if (Number(max_price.value) < Number(min_price.value)) {
+		max_price.value = min_price.value
+		this.maxPriceChanged()
+	} else {
+		this.refresh()
+	}
+}
+
+Mapa.prototype.maxPriceChanged = function() {
+	var min_price = document.getElementById('min_price')
+	var max_price = document.getElementById('max_price')
+	document.getElementById('max_price_label').innerHTML = 'Preço máximo: R$' + max_price.value;
+	if (Number(min_price.value) > Number(max_price.value)) {
+		min_price.value = max_price.value
+		this.minPriceChanged()
+	} else {
+		this.refresh()
+	}
+}
+
 // Funcao que atualiza os markers sendo mostrado no momento, de acordo com os filtros ativos
 Mapa.prototype.refresh = function() {
 	// funcao que cria o marker dos imoveis
@@ -69,6 +94,13 @@ Mapa.prototype.refresh = function() {
 		}
 
 		if (!realty.price) {
+			return false;
+		}
+
+		var minPrice = document.getElementById('min_price').value;
+		var maxPrice = document.getElementById('max_price').value;
+
+		if (Number(realty.price) < minPrice || Number(realty.price) > maxPrice) {
 			return false;
 		}
 
