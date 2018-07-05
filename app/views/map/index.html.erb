@@ -41,15 +41,14 @@
 
 <body>
 	<div id='dashboard'>
-	<button type='button' onclick="newDesc()">Adicionar descrição</button>
+	<button type='button' onclick="mapa.addDescription()">Adicionar descrição</button>
 	<form action="">
-	  <input type="radio" name="filter_marker" onchange="initialize()" id="imoveis" value="imoveis" checked> Imóveis
-	  <input type="radio" name="filter_marker" onchange="initialize()" id="descricoes" value="descricoes"> Descricões
+	  <input type="checkbox" name="filter_marker" onchange="mapa.refresh()" id="imoveis" value="imoveis" checked> Imóveis
+	  <input type="checkbox" name="filter_marker" onchange="mapa.refresh()" id="descricoes" value="descricoes" checked> Descricões
 	</form>
 	</div>
 	<div class='container'>
 		<div id='map' class='left'></div>
 		<div id='info' class='right'>Clique em um marker para ver informações sobre ele</div>
 	</div>
-	<input type="hidden" id="desc_flag" value="0" />
 </body>
