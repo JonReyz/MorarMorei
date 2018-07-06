@@ -5,6 +5,7 @@
 	padding: 3px;
 	min-height: 500px;
 	height: 100%
+	width: 100%;
 }
 
 .container > div {
@@ -12,8 +13,9 @@
 	margin: 2px;
 }
 
-#map {
+#map { 
 	width: 100%;
+
 }
 
 #info {
@@ -21,7 +23,9 @@
 }
 
 #dashboard {
-	width: 100%;
+	position: relative;
+	left: 7%;
+	width: 86%;
 	border: 1px solid #000;
 	padding: 3px;
 	min-height: 50px;
@@ -37,22 +41,37 @@
 	/*height: 20px;*/
 }
 
+.list-group{
+	max-height: 500px;
+    overflow:scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+.price-label{
+	padding-left: 50px;
+}
+
+
 </style>
 
 <body>
 	<div id='dashboard'>
-	<button type='button' onclick="mapa.addDescription()">Adicionar descrição</button>
+	<button type="button" id="btn-desc" class="btn btn-dark" onclick="mapa.addDescription()">Adicionar descrição</button>
 	<form action="">
 	  <input type="checkbox" name="filter_marker" onchange="mapa.refresh()" id="imoveis" value="imoveis" checked> Imóveis
 	  <input type="checkbox" name="filter_marker" onchange="mapa.refresh()" id="descricoes" value="descricoes" checked> Descricões
-	  <label id='min_price_label' for="min_price">Preço mínimo: R$0</label>
+	  <label id='min_price_label' class="price-label" for="min_price">Preço mínimo: R$0</label>
 	  <input type="range" id="min_price" name="filter_marker" onchange="mapa.minPriceChanged()" min="0" max="10000" value="0" step="100"/>
-	  <label id='max_price_label' for="max_price">Preço máximo: R$10000</label>
+	  <label id='max_price_label' class="price-label" for="max_price">Preço máximo: R$10000</label>
 	  <input type="range" id="max_price" name="filter_marker" onchange="mapa.maxPriceChanged()" min="0" max="10000" value="10000" step="100"/>
 	</form>
 	</div>
 	<div class='container'>
 		<div id='map' class='left'></div>
-		<div id='info' class='right'>Clique em um marker para ver informações sobre ele</div>
+		<div id='info' class='right'>
+			<div id="realty_list" class="list-group">
+			  
+			</div>
+		</div>
 	</div>
 </body>

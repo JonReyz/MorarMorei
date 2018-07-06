@@ -10,20 +10,43 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= favicon_link_tag asset_path('favicon.png'), :rel => 'icon', :type =>  'image/png' %>
     <script src="//cdn.rawgit.com/mahnunchik/markerclustererplus/master/dist/markerclusterer.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script> 
   </head>
 
   <body>
-  <div id="user_header">
-    <%= link_to 'Home', root_path %>
-    <% if logged_in? %>
-      <% user = User.find(session[:user_id]) if session[:user_id] %>
-      Nome: <%= user.nome %>
-      <%= link_to 'Logout', logout_path %>
-    <% else %>
-      <%= link_to 'Sign Up', signup_path %>
-      <%= link_to 'Log In', login_path %>        
-    <% end %>
-  </div>
+  <nav id="user_header" class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <ul class="navbar-nav">
+      <a class="navbar-brand" href="/">
+        <img src="favicon.jpg" alt="Logo" style="width:40px;">
+      </a>
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <% if logged_in? %>
+        <li class="nav-item">
+          <a class="nav-link" href="logout">Logout</a>
+        </li>
+      <% else %>
+        <li class="nav-item">
+          <a class="nav-link" href="signup">Sign Up</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="login">Log In</a>
+        </li>
+      <% end %>
+    </ul>
+  </nav>
 
   <div id="container">
     <% flash.each do |name, msg| %>
@@ -34,3 +57,7 @@
 
   </body>
 </html>
+
+<style>
+  
+</style>

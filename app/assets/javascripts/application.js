@@ -157,6 +157,21 @@ Mapa.prototype.refresh = function() {
 			{imagePath: '/infocluster'}
 		);
 	}
+
+	$("#realty_list").empty();
+	for (var i = 500; i >= 0; i--) {
+
+		$("#realty_list").append(
+			"<a href=\"#\" class=\"list-group-item list-group-item-action flex-column align-items-start\">\
+	    	<div class=\"d-flex w-100 justify-content-between\">\
+	      		<h5 class=\"mb-1\">"+this.realties.filter(filterRealty)[i].address+"</h5>\
+	      		<small>R$"+this.realties.filter(filterRealty)[i].price+",00</small>\
+	    	</div>\
+	    	<p class=\"mb-1\">"+this.realties.filter(filterRealty)[i].description+"</p>\
+  			</a>"	
+  			);
+	}
+	
 }
 
 // Funcao que requisita as moradias do servidor
