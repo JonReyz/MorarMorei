@@ -414,7 +414,7 @@ function addInfo(map){
 	});
 	
 	var infowindow = new google.maps.InfoWindow({
-		content: 'Estudantes podem fazer o percurso entre os campi da USP 					utilizando os ônibus disponibilizados pela universidade <a 					href="http://www.puspsc.usp.br/horario-de-onibus-areas-1-e-					2/" </a><br/> Horários'
+		content: 'Estudantes podem fazer o percurso entre os campi da USP 					utilizando os ônibus disponibilizados pela universidade <a 		target="_blank"			href="http://www.puspsc.usp.br/horario-de-onibus-areas-1-e-					2/" </a><br/> Horários'
 	});
 	var pos = new google.maps.LatLng(-22.001591, -47.931772);
 	google.maps.event.addListener(info,'click',function() {
